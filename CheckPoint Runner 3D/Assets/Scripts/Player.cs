@@ -2,15 +2,37 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+ 
+
+    [SerializeField] public float jumpForce = 20f;
+    [SerializeField] public bool OnFloor;
+    [SerializeField] public int jumpCount;
+    Rigidbody rb;
+
+
     void Start()
     {
-        
+        jumpCount = 0;
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if (Input.GetButton("Jump"))
+        {
+            jumpCount++;
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+            
+        }
+    
+
     }
+
+
+
+
 }
+
+
+
