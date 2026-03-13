@@ -1,10 +1,12 @@
 using UnityEngine;
 
+
 public class Player : MonoBehaviour
 {
  
 
     [SerializeField] public float jumpForce = 20f;
+    [SerializeField] public float Dash = 20f;
     [SerializeField] public bool OnFloor;
     [SerializeField] public int jumpCount;
     Rigidbody rb;
@@ -19,10 +21,24 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("Jump"))
+
+        if (Input.touchCount > 0) 
         {
-            jumpCount++;
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Stationary)
+            {
+                jumpCount++;
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
+            }
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+
+            }
+
+
+
             
         }
     
