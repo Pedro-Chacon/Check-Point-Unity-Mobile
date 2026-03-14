@@ -5,9 +5,10 @@ public class CoinManager : MonoBehaviour
 {
     [SerializeField] float coinSpawnTime = 5f;
     [SerializeField] public float coinSpeed;
-    [SerializeField] public float primeiroTempo = 10f;
-    [SerializeField] public float SegundoTempo = 20f;
-    [SerializeField] public float TerceiroTempo = 20f;
+    [SerializeField] public float transicaoTempoMoedas;
+    [SerializeField] public float primeiroRound = 10f;
+    [SerializeField] public float SegundoRound = 20f;
+    [SerializeField] public float TerceiroRound = 20f;
 
 
     [SerializeField] public int coinCount;
@@ -20,6 +21,7 @@ public class CoinManager : MonoBehaviour
     public Transform coinLimitY_1;
 
     bool canSpawnCoin;
+    bool CoroutineTimeSpawnCoin;
 
     void Start()
     {
@@ -43,13 +45,31 @@ public class CoinManager : MonoBehaviour
     }
     IEnumerator IncreaseCoinVelocityOverTime()
     {
-        yield return new WaitForSeconds(primeiroTempo);
+        CoroutineTimeSpawnCoin = true;
+        yield return new WaitForSeconds(primeiroRound);
         print("Fim primero Round");
+        canSpawnCoin = false;
+        CoroutineTimeSpawnCoin = false;
+        yield return new WaitForSeconds(transicaoTempoMoedas);
+        canSpawnCoin = true;
+        CoroutineTimeSpawnCoin = true;
         coinSpeed += 10f;
-        yield return new WaitForSeconds(SegundoTempo);
+
+        yield return new WaitForSeconds(SegundoRound);
         print("Fim segundo Round");
+        canSpawnCoin = false;
+        CoroutineTimeSpawnCoin = false;
+        yield return new WaitForSeconds(transicaoTempoMoedas);
+        canSpawnCoin = true;
+        CoroutineTimeSpawnCoin = true;
         coinSpeed += 10f;
-        yield return new WaitForSeconds(TerceiroTempo);
+
+        yield return new WaitForSeconds(TerceiroRound);
+        canSpawnCoin = false;
+        CoroutineTimeSpawnCoin = false;
+        yield return new WaitForSeconds(transicaoTempoMoedas);
+        canSpawnCoin = true;
+        CoroutineTimeSpawnCoin = true;
         print("Fim terceiro Round");
         coinSpeed += 10f;
     }
@@ -57,12 +77,15 @@ public class CoinManager : MonoBehaviour
     IEnumerator spawnCoin()
     {
         canSpawnCoin = false;
-        float randomPosX = Random.Range(coinLimitX.transform.position.x, coinLimitX_1.transform.position.x);
-        float randomPosY = Random.Range(coinLimitY.transform.position.y, coinLimitY_1.transform.position.y);
-        Vector3 SpawnVector = new Vector3(randomPosX, randomPosY, -2.5f);
-        Destroy(Instantiate(coinPrefab, SpawnVector, Quaternion.Euler(0f, 0f, 90f)), 30f);
-        coinPrefab.GetComponent<CoinObject>().coinSpeed = coinSpeed;
 
+        if (CoroutineTimeSpawnCoin == true)
+        {
+            float randomPosX = Random.Range(coinLimitX.transform.position.x, coinLimitX_1.transform.position.x);
+            float randomPosY = Random.Range(coinLimitY.transform.position.y, coinLimitY_1.transform.position.y);
+            Vector3 SpawnVector = new Vector3(randomPosX, randomPosY, -2.5f);
+            Destroy(Instantiate(coinPrefab, SpawnVector, Quaternion.Euler(0f, 0f, 90f)), 30f);
+            coinPrefab.GetComponent<CoinObject>().coinSpeed = coinSpeed;
+        }
 
         yield return new WaitForSeconds(coinSpawnTime);
         canSpawnCoin = true;

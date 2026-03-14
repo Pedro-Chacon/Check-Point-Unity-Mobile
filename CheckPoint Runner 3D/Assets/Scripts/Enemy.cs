@@ -3,16 +3,20 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Rigidbody rb;
-    [SerializeField] float enemySpeed = 30f;
+    [SerializeField] public float enemySpeed;
+
+    AlertSystem alertSystem;
 
     void Start()
     {
+        alertSystem = FindAnyObjectByType<AlertSystem>();
         rb = GetComponent<Rigidbody>();
     }
 
 
     void Update()
     {
+        enemySpeed = alertSystem.enemySpeed;
 
     }
 
