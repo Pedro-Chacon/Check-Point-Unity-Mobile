@@ -4,7 +4,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
  
-
     [SerializeField] public float jumpForce = 20f;
     [SerializeField] public float Dash = 20f;
     [SerializeField] public bool OnFloor;
@@ -19,10 +18,14 @@ public class Player : MonoBehaviour
     float touchStartTime;
     [SerializeField] float holdTime = 0.1f;
 
+
+
+    ShieldManager shieldManager;
     void Start()
     {
         jumpCount = 0;
         rb = GetComponent<Rigidbody>();
+        shieldManager = FindAnyObjectByType<ShieldManager>();
     }
 
 
@@ -101,7 +104,14 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("ShieldPrefab"))
+        {
+            shieldManager.shieldActive = true;
+            Destroy(other.gameObject);
+        }
+    }
 
 }
 

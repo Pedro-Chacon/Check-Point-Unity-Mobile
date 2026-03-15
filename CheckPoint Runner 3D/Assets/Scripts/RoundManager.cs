@@ -14,13 +14,13 @@ public class RoundManager : MonoBehaviour
     [SerializeField] public float enemySpeed = 30f;
     [SerializeField] public float coinSpeed = 8f;
     [SerializeField] public float addBulletSpeed = 8f;
-
+    [SerializeField] public float shieldPrefabSpeed = 8f;
     [SerializeField] public float obstaculo_3_Speed = 8f;
-    AlertSystemThird AlertSystemThird;
+
 
     void Start()
     {
-        AlertSystemThird = FindAnyObjectByType<AlertSystemThird>();
+
         StartCoroutine(IncreaseObjectsVelocity());
     }
 
@@ -41,7 +41,8 @@ public class RoundManager : MonoBehaviour
         coinSpeed += 10f;
         addBulletSpeed += 10f;
         obstaculo_3_Speed += 10f;
-        
+        shieldPrefabSpeed += 10f;
+
         print("Fim primero Round");
         yield return new WaitForSeconds(TransicaoTempoSpawn);
 
@@ -53,7 +54,7 @@ public class RoundManager : MonoBehaviour
         coinSpeed += 10f;
         addBulletSpeed += 10f;
         obstaculo_3_Speed += 10f;
-        
+        shieldPrefabSpeed += 10f;
 
 
         print("Fim segundo Round");
@@ -67,7 +68,8 @@ public class RoundManager : MonoBehaviour
         coinSpeed += 10f;
         addBulletSpeed += 10f;
         obstaculo_3_Speed += 10f;
-       
+        shieldPrefabSpeed += 10f;
+
         print("Fim terceiro Round");
     }
 }

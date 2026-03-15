@@ -12,6 +12,7 @@ TagManager:
   - AddBullet
   - AtivarAlertSystemThird
   - Bullet
+  - ShieldPrefab
   layers:
   - Default
   - TransparentFX
