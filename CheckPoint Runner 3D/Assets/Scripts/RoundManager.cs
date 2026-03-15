@@ -7,6 +7,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] public float primeiroRound = 10f;
     [SerializeField] public float SegundoRound = 20f;
     [SerializeField] public float TerceiroRound = 20f;
+    [SerializeField] public float TempoAteComecarOsRounds = 10f;
     [SerializeField] public float TransicaoTempoSpawn = 10f;
 
     [Header("Start Objects Velocity")]
@@ -30,39 +31,43 @@ public class RoundManager : MonoBehaviour
     
     IEnumerator IncreaseObjectsVelocity()
     {
-        print("Começou primero Round");
+        yield return new WaitForSeconds(TempoAteComecarOsRounds);
+        print("Acabou tempo de espera de começar os Rounds");
+
+        print("Vai começar primeiro Round");
         yield return new WaitForSeconds(primeiroRound);
+        print("Começou primero Round");
+        enemySpeed += 10f;
+        coinSpeed += 10f;
+        addBulletSpeed += 10f;
+        obstaculo_3_Speed += 10f;
+        
         print("Fim primero Round");
-        enemySpeed += 10f;
-        coinSpeed += 10f;
-        addBulletSpeed += 10f;
-        obstaculo_3_Speed += 10f;
-        AlertSystemThird.InitialPosition.transform.position += new Vector3(10f, 0f, 0f);
-
         yield return new WaitForSeconds(TransicaoTempoSpawn);
 
 
-        print("Começou segundo Round");
+        print("Vai começar segundo Round");
         yield return new WaitForSeconds(SegundoRound);
-        print("Fim segundo Round");
+        print("Começou segundo Round");
         enemySpeed += 10f;
         coinSpeed += 10f;
         addBulletSpeed += 10f;
         obstaculo_3_Speed += 10f;
-    
+        
 
 
+        print("Fim segundo Round");
         yield return new WaitForSeconds(TransicaoTempoSpawn);
 
 
-        print("Começou terceiro Round");
+        print("Vai começar terceiro Round");
         yield return new WaitForSeconds(TerceiroRound);
-        print("Fim terceiro Round");
+        print("Começou terceiro Round");
         enemySpeed += 10f;
         coinSpeed += 10f;
         addBulletSpeed += 10f;
         obstaculo_3_Speed += 10f;
-    
-
+       
+        print("Fim terceiro Round");
     }
 }

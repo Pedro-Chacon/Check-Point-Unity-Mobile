@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ShootBullet : MonoBehaviour
 {
+    [SerializeField] float minSwipeDistance = 100f;
     [SerializeField] public float shootSpeed;
     [SerializeField] public GameObject bullet;
     [SerializeField] public int municao = 3;
@@ -46,38 +47,36 @@ public class ShootBullet : MonoBehaviour
         float deltaX = endTouchPosition.x - startTouchPosition.x;
         float deltaY = endTouchPosition.y - startTouchPosition.y;
 
+        float SwipeDistance = Vector2.Distance(startTouchPosition, endTouchPosition);
 
-        if (deltaX > 1)
+        if (SwipeDistance < minSwipeDistance)
         {
-            print("Direita");
+            return;
+        }
 
-            if (municao > 0)
+        if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
+        {
+
+            if (deltaX > 0)
             {
-                municao--;
-                Destroy(Instantiate(bullet, spawnTiro.transform.position, Quaternion.identity), 3);
-                
+             
+
+                if (municao > 0)
+                {
+                    municao--;
+                    Destroy(Instantiate(bullet, spawnTiro.transform.position, Quaternion.identity), 3);
+
+                }
+
             }
+            else if (deltaX < 0)
+            {
+          
 
 
-
-        }
-        else if (deltaX < 1)
-        {
-            print("Esquerda");
-       
-
+            }
         }
 
-        if (deltaY > 1)
-        {
-            print("Cima");
-       
-        }
-        else if (deltaY < 1)
-        {
-            print("Baixo");
-       
-        }
 
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 
 public class AlertSystemThird : MonoBehaviour
@@ -9,6 +10,9 @@ public class AlertSystemThird : MonoBehaviour
     public float obstaculeSpeed;
     public float obstaculeRotationSpeed;
     public Vector3 rotationAleatory;
+
+    public Material enemyMaterial;
+    public Material enemyBrokenMaterial;
 
     //Se quiser aumentar a VELOCIDADE, TEM QUE AUMETAR OS OUTROS FATORES TBM
     // Da pro player cortar o brick damage e dai desativa o mesh renderer dele
@@ -38,7 +42,7 @@ public class AlertSystemThird : MonoBehaviour
 
     void Update()
     {
-       
+       obstaculeSpeed = RoundManager.obstaculo_3_Speed;
 
         if (canSpawnDamageBrick)
         {
@@ -51,16 +55,24 @@ public class AlertSystemThird : MonoBehaviour
 
     IEnumerator SpawnDamageBrick()
     {
-        int varSpeed = 0;
+        meshRendererAlert1.material = enemyMaterial;
+        meshRendererAlert2.material = enemyMaterial;
+        yield return new WaitForSeconds(0.1f);
 
-        rb.linearVelocity = new Vector3(varSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
+
+
+
+        canSpawnDamageBrick = false;
+
+        rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, rb.linearVelocity.z);
 
         transform.position = InitialPosition.transform.position;
 
         //ROTACIONAR EM POS ALEATORIA
         Vector3 angulosRotacao = new Vector3(0f, 0, (Random.Range(0f, 360f)));
         rotationAleatory = new Vector3(0f, 0, (Random.Range(0f, 360f)));
-        canSpawnDamageBrick = false;
+
+        
         meshRendererBrickDamage.enabled = false;
         meshRendererAlert1.enabled = false;
         meshRendererAlert2.enabled = false;
@@ -68,40 +80,18 @@ public class AlertSystemThird : MonoBehaviour
         //POSICAO Y
         transform.position = new Vector3(transform.position.x, Random.Range(5f, 10f), 4.4f);
 
-
-        yield return new WaitForSeconds(tempoDesativo);
-        print("Ativou OBJETO");
-
        //APLICA VELOCIDADE EM X
         rb.linearVelocity = new Vector3(obstaculeSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
 
 
+        
+
+    }
+
+    IEnumerator Piscar_E_Ativar()
+    {
         //Código para piscar
         #region Piscar
-        meshRendererAlert1.enabled = true;
-        meshRendererAlert2.enabled = true;
-        yield return new WaitForSeconds(2f);
-        meshRendererAlert1.enabled = false;
-        meshRendererAlert2.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        meshRendererAlert1.enabled = true;
-        meshRendererAlert2.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        meshRendererAlert1.enabled = false;
-        meshRendererAlert2.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        meshRendererAlert1.enabled = true;
-        meshRendererAlert2.enabled = true;
-        yield return new WaitForSeconds(0.5f);
-        meshRendererAlert1.enabled = false;
-        meshRendererAlert2.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        meshRendererAlert1.enabled = true;
-        meshRendererAlert2.enabled = true;
-        yield return new WaitForSeconds(0.1f);
-        meshRendererAlert1.enabled = false;
-        meshRendererAlert2.enabled = false;
-        yield return new WaitForSeconds(0.1f);
         meshRendererAlert1.enabled = true;
         meshRendererAlert2.enabled = true;
         yield return new WaitForSeconds(0.1f);
@@ -120,12 +110,28 @@ public class AlertSystemThird : MonoBehaviour
         meshRendererAlert1.enabled = true;
         meshRendererAlert2.enabled = true;
 
-        print("desativou OBJETO");
         yield return new WaitForSeconds(tempoAtivo);
-
         canSpawnDamageBrick = true;
-
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            meshRendererBrickDamage.enabled = false;
+            meshRendererAlert1.material = enemyBrokenMaterial;
+            meshRendererAlert2.material = enemyBrokenMaterial;
+
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("AtivarAlertSystemThird"))
+        {
+            StartCoroutine(Piscar_E_Ativar());
+        }
+    }
+
 
 
 }

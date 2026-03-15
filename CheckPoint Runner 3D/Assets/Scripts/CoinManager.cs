@@ -57,7 +57,6 @@ public class CoinManager : MonoBehaviour
     {
         CoroutineTimeSpawnCoin = true;
         yield return new WaitForSeconds(primeiroRound);
-        print("Fim primero Round");
         canSpawnCoin = false;
         CoroutineTimeSpawnCoin = false;
         yield return new WaitForSeconds(transicaoTempoMoedas);
@@ -66,7 +65,6 @@ public class CoinManager : MonoBehaviour
         
 
         yield return new WaitForSeconds(SegundoRound);
-        print("Fim segundo Round");
         canSpawnCoin = false;
         CoroutineTimeSpawnCoin = false;
         yield return new WaitForSeconds(transicaoTempoMoedas);
@@ -80,7 +78,6 @@ public class CoinManager : MonoBehaviour
         yield return new WaitForSeconds(transicaoTempoMoedas);
         canSpawnCoin = true;
         CoroutineTimeSpawnCoin = true;
-        print("Fim terceiro Round");
         
     }
 

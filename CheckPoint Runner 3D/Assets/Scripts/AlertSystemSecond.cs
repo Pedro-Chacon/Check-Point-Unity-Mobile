@@ -37,7 +37,7 @@ public class AlertSystemSecond : MonoBehaviour
         meshRendererAlert1.enabled = false;
         meshRendererAlert2.enabled = false;
 
-        transform.position = new Vector3(transform.position.x, Random.Range(1f, 13f), transform.position.z);
+        transform.position = new Vector3(transform.position.x, Random.Range(1f, 17f), transform.position.z);
 
         yield return new WaitForSeconds(tempoDesativo);
 

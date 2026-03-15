@@ -10,6 +10,8 @@ TagManager:
   - AlertObject
   - Enemy
   - AddBullet
+  - AtivarAlertSystemThird
+  - Bullet
   layers:
   - Default
   - TransparentFX
