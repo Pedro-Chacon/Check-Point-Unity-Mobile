@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
             if (touch.phase == TouchPhase.Moved)
             {
-
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y, rb.linearVelocity.z);
             }
 
 

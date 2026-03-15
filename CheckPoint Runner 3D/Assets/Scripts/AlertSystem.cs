@@ -11,10 +11,7 @@ public class AlertSystem : MonoBehaviour
     [Header("Enemy Object")]
     [SerializeField] float timeToSpawn = 3f;
     [SerializeField] float timeToDestroy = 5f;
-    [SerializeField] public float enemySpeed = 30f;
-    [SerializeField] public float primeiroRound = 10f;
-    [SerializeField] public float SegundoRound = 20f;
-    [SerializeField] public float TerceiroRound = 20f;
+    [SerializeField] public float enemySpeed;
     [SerializeField] GameObject enemyObject;
     [SerializeField] GameObject spawnEnemyObject;
 
@@ -24,19 +21,24 @@ public class AlertSystem : MonoBehaviour
     Player player;
     Rigidbody rb;
     MeshRenderer meshRenderer;
+    RoundManager roundManager;
 
     void Start()
     {
-        StartCoroutine(IncreaseEnemyVelocityOverTime());
+        roundManager = FindAnyObjectByType<RoundManager>();
         canSpawnEnemy = true;
         rb = GetComponent<Rigidbody>();
         player = FindAnyObjectByType<Player>();
         meshRenderer = GetComponent<MeshRenderer>();
+
+        
     }
 
     void Update()
     {
-        if(canSpawnEnemy == true)
+        enemySpeed = roundManager.enemySpeed;
+
+        if (canSpawnEnemy == true)
         {
             StartCoroutine(spawnEnemy());
         }
@@ -52,18 +54,7 @@ public class AlertSystem : MonoBehaviour
 
 
     }
-    IEnumerator IncreaseEnemyVelocityOverTime()
-    {
-        yield return new WaitForSeconds(primeiroRound);
-        print("Fim primero Round");
-        enemySpeed += 10f;
-        yield return new WaitForSeconds(SegundoRound);
-        print("Fim segundo Round");
-        enemySpeed += 10f;
-        yield return new WaitForSeconds(TerceiroRound);
-        print("Fim terceiro Round");
-        enemySpeed += 10f;
-    }
+
 
     IEnumerator spawnEnemy()
     {

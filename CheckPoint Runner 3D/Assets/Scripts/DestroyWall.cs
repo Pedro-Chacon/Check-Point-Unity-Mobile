@@ -13,5 +13,9 @@ public class DestroyWall : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        if (other.gameObject.CompareTag("AddBullet"))
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

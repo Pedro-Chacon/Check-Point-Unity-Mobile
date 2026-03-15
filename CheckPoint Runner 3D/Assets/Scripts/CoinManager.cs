@@ -23,11 +23,14 @@ public class CoinManager : MonoBehaviour
     bool canSpawnCoin;
     bool CoroutineTimeSpawnCoin;
 
+    RoundManager RoundManager;
+
     void Start()
     {
+        RoundManager = FindAnyObjectByType<RoundManager>();
 
         StartCoroutine(IncreaseCoinVelocityOverTime());
-        coinSpeed = 8f;
+
         canSpawnCoin = true;
         coinCount = 0;
     }
@@ -35,7 +38,14 @@ public class CoinManager : MonoBehaviour
  
     void Update()
     {
-        
+        coinSpeed = RoundManager.coinSpeed;
+
+        transicaoTempoMoedas = RoundManager.TransicaoTempoSpawn;
+        primeiroRound = RoundManager.primeiroRound;
+        SegundoRound = RoundManager.SegundoRound;
+        TerceiroRound = RoundManager.TerceiroRound;
+
+
         if (canSpawnCoin == true)
         {
             StartCoroutine(spawnCoin());
@@ -53,7 +63,7 @@ public class CoinManager : MonoBehaviour
         yield return new WaitForSeconds(transicaoTempoMoedas);
         canSpawnCoin = true;
         CoroutineTimeSpawnCoin = true;
-        coinSpeed += 10f;
+        
 
         yield return new WaitForSeconds(SegundoRound);
         print("Fim segundo Round");
@@ -62,7 +72,7 @@ public class CoinManager : MonoBehaviour
         yield return new WaitForSeconds(transicaoTempoMoedas);
         canSpawnCoin = true;
         CoroutineTimeSpawnCoin = true;
-        coinSpeed += 10f;
+        
 
         yield return new WaitForSeconds(TerceiroRound);
         canSpawnCoin = false;
@@ -71,7 +81,7 @@ public class CoinManager : MonoBehaviour
         canSpawnCoin = true;
         CoroutineTimeSpawnCoin = true;
         print("Fim terceiro Round");
-        coinSpeed += 10f;
+        
     }
 
     IEnumerator spawnCoin()

@@ -29,10 +29,7 @@ public class FingerCollider : MonoBehaviour
     {
      
 
-            if (other.gameObject.CompareTag("Enemy"))
-            {
-                Destroy(other.gameObject);
-            }
+
         
     }
 

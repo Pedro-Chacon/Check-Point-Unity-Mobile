@@ -7,10 +7,12 @@ public class AlertSystemThird : MonoBehaviour
 
     [Header("Propiedades Obstaculo")]
     public float obstaculeSpeed;
+    public float obstaculeRotationSpeed;
+    public Vector3 rotationAleatory;
 
-   //Se quiser aumentar a VELOCIDADE, TEM QUE AUMETAR OS OUTROS FATORES TBM
-   // Da pro player cortar o brick damage e dai desativa o mesh renderer dele
-   // Criar dps um script Manager q aumenta a velocidade de todos por ROUND??
+    //Se quiser aumentar a VELOCIDADE, TEM QUE AUMETAR OS OUTROS FATORES TBM
+    // Da pro player cortar o brick damage e dai desativa o mesh renderer dele
+    // Criar dps um script Manager q aumenta a velocidade de todos por ROUND??
     [SerializeField] float tempoAtivo;
     [SerializeField] float tempoDesativo;
     public GameObject damageBrick;
@@ -22,6 +24,7 @@ public class AlertSystemThird : MonoBehaviour
     MeshRenderer meshRendererBrickDamage;
     bool canSpawnDamageBrick;
     Rigidbody rb;
+    RoundManager RoundManager;
     void Start()
     {
         canSpawnDamageBrick = true;
@@ -29,33 +32,49 @@ public class AlertSystemThird : MonoBehaviour
         meshRendererAlert2 = Alert2.GetComponent<MeshRenderer>();
         meshRendererBrickDamage = damageBrick.GetComponent<MeshRenderer>();
         rb = GetComponent<Rigidbody>();
+        RoundManager = FindAnyObjectByType<RoundManager>();
     }
 
 
     void Update()
     {
+       
+
         if (canSpawnDamageBrick)
         {
             StartCoroutine(SpawnDamageBrick());
         }
+
+        //FAZER GIRAR
+        transform.Rotate(rotationAleatory * obstaculeRotationSpeed * Time.deltaTime);
     }
 
     IEnumerator SpawnDamageBrick()
     {
-        transform.position = InitialPosition.transform.position;
-        Vector3 angulosRotacao = new Vector3(0f, 0, Random.Range(0f, 360f));
+        int varSpeed = 0;
 
+        rb.linearVelocity = new Vector3(varSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
+
+        transform.position = InitialPosition.transform.position;
+
+        //ROTACIONAR EM POS ALEATORIA
+        Vector3 angulosRotacao = new Vector3(0f, 0, (Random.Range(0f, 360f)));
+        rotationAleatory = new Vector3(0f, 0, (Random.Range(0f, 360f)));
         canSpawnDamageBrick = false;
         meshRendererBrickDamage.enabled = false;
         meshRendererAlert1.enabled = false;
         meshRendererAlert2.enabled = false;
 
-        transform.position = new Vector3(transform.position.x, Random.Range(5f, 14f), 4.4f);
-        transform.Rotate(angulosRotacao);
+        //POSICAO Y
+        transform.position = new Vector3(transform.position.x, Random.Range(5f, 10f), 4.4f);
+
 
         yield return new WaitForSeconds(tempoDesativo);
+        print("Ativou OBJETO");
 
-        rb.linearVelocity = new Vector3(1f * obstaculeSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
+       //APLICA VELOCIDADE EM X
+        rb.linearVelocity = new Vector3(obstaculeSpeed, rb.linearVelocity.y, rb.linearVelocity.z);
+
 
         //Código para piscar
         #region Piscar
@@ -101,7 +120,7 @@ public class AlertSystemThird : MonoBehaviour
         meshRendererAlert1.enabled = true;
         meshRendererAlert2.enabled = true;
 
-
+        print("desativou OBJETO");
         yield return new WaitForSeconds(tempoAtivo);
 
         canSpawnDamageBrick = true;
