@@ -11,9 +11,10 @@ public class ShieldManager : MonoBehaviour
     [SerializeField] public float shieldSpeed;
     [SerializeField] public float shieldPrefb_TimeToSpawn;
 
+    [SerializeField] Player player;
     void Start()
     {
-
+        player.GetComponent<BoxCollider>().enabled = true;
         canGenerateShield = true;
     }
 
@@ -53,6 +54,7 @@ public class ShieldManager : MonoBehaviour
      IEnumerator TurnOnShield()
     {
         shieldActive = false;
+        player.canTakeDamage = false;
 
         #region Piscar Shield
         shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -69,9 +71,22 @@ public class ShieldManager : MonoBehaviour
         #endregion
 
         shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+        
         yield return new WaitForSeconds(shieldTimeActive);
 
+        #region Piscar Shield
         shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        #endregion
+
+        shieldObject.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        player.canTakeDamage = true;
 
     }
 

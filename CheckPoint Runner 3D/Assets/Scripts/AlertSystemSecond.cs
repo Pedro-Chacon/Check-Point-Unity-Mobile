@@ -12,12 +12,14 @@ public class AlertSystemSecond : MonoBehaviour
     MeshRenderer meshRendererAlert2;
     MeshRenderer meshRendererBrickDamage;
     bool canSpawnDamageBrick;
+    BoxCollider DamageBrickBoxCollider;
     void Start()
     {
         canSpawnDamageBrick = true;
         meshRendererAlert1 = Alert1.GetComponent<MeshRenderer>();
         meshRendererAlert2 = Alert2.GetComponent<MeshRenderer>();
         meshRendererBrickDamage = damageBrick.GetComponent<MeshRenderer>();
+        DamageBrickBoxCollider = damageBrick.GetComponent<BoxCollider>();
 
     }
 
@@ -26,6 +28,15 @@ public class AlertSystemSecond : MonoBehaviour
         if (canSpawnDamageBrick) 
         {
             StartCoroutine(SpawnDamageBrick());
+        }
+
+        if(meshRendererBrickDamage.enabled == false)
+        {
+            DamageBrickBoxCollider.enabled = false;
+        }
+        else
+        {
+            DamageBrickBoxCollider.enabled = true;
         }
     }
 

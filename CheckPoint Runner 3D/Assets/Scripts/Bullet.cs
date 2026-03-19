@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+
     Rigidbody rb;
     ShootBullet ShootBullet;
 

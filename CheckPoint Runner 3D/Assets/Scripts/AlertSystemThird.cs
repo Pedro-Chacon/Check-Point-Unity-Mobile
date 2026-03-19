@@ -14,9 +14,6 @@ public class AlertSystemThird : MonoBehaviour
     public Material enemyMaterial;
     public Material enemyBrokenMaterial;
 
-    //Se quiser aumentar a VELOCIDADE, TEM QUE AUMETAR OS OUTROS FATORES TBM
-    // Da pro player cortar o brick damage e dai desativa o mesh renderer dele
-    // Criar dps um script Manager q aumenta a velocidade de todos por ROUND??
     [SerializeField] float tempoAtivo;
     [SerializeField] float tempoDesativo;
     public GameObject damageBrick;

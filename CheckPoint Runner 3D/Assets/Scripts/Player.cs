@@ -1,13 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 
 public class Player : MonoBehaviour
 {
- 
+    [SerializeField] public int life = 3;
     [SerializeField] public float jumpForce = 20f;
     [SerializeField] public float Dash = 20f;
     [SerializeField] public bool OnFloor;
     [SerializeField] public int jumpCount;
+    [SerializeField] public bool isDead = false;
+    [SerializeField] public bool canTakeDamage = true;
+
     Rigidbody rb;
 
     [Header("Touch Settings")]
@@ -21,11 +25,15 @@ public class Player : MonoBehaviour
 
 
     ShieldManager shieldManager;
+    MeshRenderer meshRenderer;
     void Start()
     {
         jumpCount = 0;
         rb = GetComponent<Rigidbody>();
         shieldManager = FindAnyObjectByType<ShieldManager>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.enabled = true;
+        canTakeDamage = true;
     }
 
 
@@ -67,6 +75,8 @@ public class Player : MonoBehaviour
                 DetectSwipe();
             }
         }
+
+
     }
     void Jump()
     {
@@ -104,6 +114,26 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator PiscarDamage()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(0.2f);
+        meshRenderer.enabled = false;
+        yield return new WaitForSeconds(0.2f);
+        meshRenderer.enabled = true;
+        yield return new WaitForSeconds(0.2f);
+        meshRenderer.enabled = false;
+        yield return new WaitForSeconds(0.2f);
+        meshRenderer.enabled = true;
+        yield return new WaitForSeconds(0.1f);
+        meshRenderer.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        meshRenderer.enabled = true;
+
+        canTakeDamage = true;
+        StopCoroutine(PiscarDamage());
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("ShieldPrefab"))
@@ -111,6 +141,18 @@ public class Player : MonoBehaviour
             shieldManager.shieldActive = true;
             Destroy(other.gameObject);
         }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            if (canTakeDamage == true)
+            {
+                life--;
+                StartCoroutine(PiscarDamage());
+            }
+        }
+
+
+
     }
 
 }

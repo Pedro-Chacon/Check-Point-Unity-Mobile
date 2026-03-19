@@ -64,7 +64,7 @@ public class ShootBullet : MonoBehaviour
                 if (municao > 0)
                 {
                     municao--;
-                    Destroy(Instantiate(bullet, spawnTiro.transform.position, Quaternion.identity), 3);
+                    Destroy(Instantiate(bullet, spawnTiro.transform.position, Quaternion.identity), 2);
 
                 }
 
