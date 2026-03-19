@@ -13,6 +13,7 @@ TagManager:
   - AtivarAlertSystemThird
   - Bullet
   - ShieldPrefab
+  - Obstacule3
   layers:
   - Default
   - TransparentFX

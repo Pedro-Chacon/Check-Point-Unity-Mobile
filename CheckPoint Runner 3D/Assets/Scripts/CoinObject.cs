@@ -14,13 +14,21 @@ public class CoinObject : MonoBehaviour
     public Vector3 angulosRotacao = new Vector3(90f, 0, 0f);
 
     Rigidbody rb;
+
     HudManager hudManager;
     CoinManager coinManager;
+
+
+    public void Initialize(HudManager hud, CoinManager coinMgr)
+    {
+        hudManager = hud;
+        coinManager = coinMgr;
+
+        coinSpeed = coinManager.coinSpeed;
+    }
+
     private void Start()
     {
-        coinManager = FindAnyObjectByType<CoinManager>();
-        coinSpeed = coinManager.coinSpeed;
-        hudManager = FindAnyObjectByType<HudManager>();
         rb = GetComponent<Rigidbody>();
     }
     void Update()
@@ -28,10 +36,6 @@ public class CoinObject : MonoBehaviour
         transform.Rotate(angulosRotacao * coinSpeedRotation * Time.deltaTime);
 
     }
-
-
-
-
 
     private void FixedUpdate()
     {

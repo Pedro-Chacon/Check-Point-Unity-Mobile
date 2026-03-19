@@ -17,6 +17,8 @@ public class RoundManager : MonoBehaviour
     [SerializeField] public float shieldPrefabSpeed = 8f;
     [SerializeField] public float obstaculo_3_Speed = 8f;
 
+     Obstacule3 obstacule3;
+
 
     void Start()
     {
@@ -26,7 +28,7 @@ public class RoundManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
     
     IEnumerator IncreaseObjectsVelocity()

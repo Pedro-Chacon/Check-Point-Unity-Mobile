@@ -23,11 +23,11 @@ public class CoinManager : MonoBehaviour
     bool canSpawnCoin;
     bool CoroutineTimeSpawnCoin;
 
-    RoundManager RoundManager;
+    [SerializeField] RoundManager RoundManager;
+    [SerializeField] HudManager hudManager;
 
     void Start()
     {
-        RoundManager = FindAnyObjectByType<RoundManager>();
 
         StartCoroutine(IncreaseCoinVelocityOverTime());
 
@@ -49,6 +49,7 @@ public class CoinManager : MonoBehaviour
         if (canSpawnCoin == true)
         {
             StartCoroutine(spawnCoin());
+            canSpawnCoin = false;
         }
 
 
@@ -83,15 +84,19 @@ public class CoinManager : MonoBehaviour
 
     IEnumerator spawnCoin()
     {
-        canSpawnCoin = false;
+        
 
         if (CoroutineTimeSpawnCoin == true)
         {
             float randomPosX = Random.Range(coinLimitX.transform.position.x, coinLimitX_1.transform.position.x);
             float randomPosY = Random.Range(coinLimitY.transform.position.y, coinLimitY_1.transform.position.y);
             Vector3 SpawnVector = new Vector3(randomPosX, randomPosY, -2.5f);
-            Destroy(Instantiate(coinPrefab, SpawnVector, Quaternion.Euler(0f, 0f, 90f)), 30f);
+            GameObject coin = (Instantiate(coinPrefab, SpawnVector, Quaternion.Euler(0f, 0f, 90f)));
+            Destroy(coin, 30f);
             coinPrefab.GetComponent<CoinObject>().coinSpeed = coinSpeed;
+
+            CoinObject coinScript = coin.GetComponent<CoinObject>();
+            coinScript.Initialize(hudManager, this);
         }
 
         yield return new WaitForSeconds(coinSpawnTime);

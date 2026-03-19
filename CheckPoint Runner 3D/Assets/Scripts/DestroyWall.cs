@@ -13,6 +13,10 @@ public class DestroyWall : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+        if (other.gameObject.CompareTag("Obstacule3"))
+        {
+            Destroy(other.gameObject);
+        }
         if (other.gameObject.CompareTag("AddBullet"))
         {
             Destroy(other.gameObject);
