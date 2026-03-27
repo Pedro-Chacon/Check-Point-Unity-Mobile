@@ -2520,7 +2520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 151.88}
+  m_AnchoredPosition: {x: 0, y: 129}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1150944702
@@ -2907,7 +2907,7 @@ RectTransform:
   m_GameObject: {fileID: 1280334791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0504, y: 2.4586, z: 1}
+  m_LocalScale: {x: 1.8852011, y: 2.4586, z: 2.2257}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 906643638}
@@ -2915,7 +2915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1123, y: 520}
+  m_AnchoredPosition: {x: -1029, y: 503}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1280334793
@@ -4466,8 +4466,6 @@ MonoBehaviour:
   obstaculeSpeed: 10
   obstaculeRotationSpeed: 9
   rotationAleatory: {x: 0, y: 30, z: 0}
-  enemyMaterial: {fileID: 0}
-  enemyBrokenMaterial: {fileID: 0}
   tempoAtivo: 0
   tempoDesativo: 0
   AlertSystemThird_Prefab: {fileID: 8853517487576888821, guid: 0e71d69e779410d459845a17f35a0d21, type: 3}
@@ -4802,7 +4800,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -59.885}
+  m_AnchoredPosition: {x: 0, y: -106}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1829836235

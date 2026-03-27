@@ -23,11 +23,14 @@ public class Player : MonoBehaviour
     [SerializeField] float holdTime = 0.1f;
 
 
+    public bool EncostouShield = false;
+
 
     ShieldManager shieldManager;
     MeshRenderer meshRenderer;
     void Start()
     {
+        EncostouShield = false;
         jumpCount = 0;
         rb = GetComponent<Rigidbody>();
         shieldManager = FindAnyObjectByType<ShieldManager>();
@@ -138,7 +141,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ShieldPrefab"))
         {
-            shieldManager.shieldActive = true;
+            EncostouShield = true;
             Destroy(other.gameObject);
         }
 

@@ -11,9 +11,19 @@ public class ShieldManager : MonoBehaviour
     [SerializeField] public float shieldSpeed;
     [SerializeField] public float shieldPrefb_TimeToSpawn;
 
+    // SWIPE
+    [SerializeField] float minSwipeDistance = 100f;
+
+    // POSI플O INICIAL DO TOQUE
+    [SerializeField] private Vector2 startTouchPosition;
+
+    // POSI플O FINAL DO TOQUE
+    [SerializeField] private Vector2 endTouchPosition;
+
     [SerializeField] Player player;
     void Start()
     {
+        player = FindAnyObjectByType<Player>();
         player.GetComponent<BoxCollider>().enabled = true;
         canGenerateShield = true;
     }
@@ -24,17 +34,85 @@ public class ShieldManager : MonoBehaviour
 
         if (canGenerateShield == true)
         {
+            canGenerateShield = false;
             StartCoroutine(ShieldPrefabGenerator());
         }
 
-
         if (shieldActive == true)
         {
+            shieldActive = false;
             StartCoroutine(TurnOnShield());
         }
 
 
+
+
+        // VERIFICA SE EXISTE ALGUM TOQUE NA TELA
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            // CAPTURA A POSI플O INICIAL DO TOQUE
+            if (touch.phase == TouchPhase.Began)
+            {
+                startTouchPosition = touch.position;
+            }
+            // CAPTURA A POSI플O FINAL E VERIFICA O SWIPE
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                endTouchPosition = touch.position;
+                // PROCESSA O SWIPE
+                DetectSwipe();
+            }
+        }
+
     }
+
+    void DetectSwipe()
+    {
+        float deltaX = endTouchPosition.x - startTouchPosition.x;
+        float deltaY = endTouchPosition.y - startTouchPosition.y;
+
+        float SwipeDistance = Vector2.Distance(startTouchPosition, endTouchPosition);
+
+        if (SwipeDistance < minSwipeDistance)
+        {
+            return;
+        }
+
+        if (Mathf.Abs(deltaY) > Mathf.Abs(deltaX))
+        {
+
+            if (deltaY > 0 && player.EncostouShield == true)
+            {
+             
+               
+                    shieldActive = true;
+                
+            
+
+
+
+            }
+            else if (deltaY < 0)
+            {
+
+
+
+            }
+
+
+
+
+
+
+        }
+
+
+    }
+
+
+
+
 
     IEnumerator ShieldPrefabGenerator()
     {
@@ -53,6 +131,7 @@ public class ShieldManager : MonoBehaviour
 
      IEnumerator TurnOnShield()
     {
+        player.EncostouShield = false;
         shieldActive = false;
         player.canTakeDamage = false;
 
