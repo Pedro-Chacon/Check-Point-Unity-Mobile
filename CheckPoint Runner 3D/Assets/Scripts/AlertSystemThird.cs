@@ -35,6 +35,7 @@ public class AlertSystemThird : MonoBehaviour
     void Update()
     {
         
+
         obstaculeSpeed = RoundManager.obstaculo_3_Speed;
         if (canSpawnDamageBrick)
         {
